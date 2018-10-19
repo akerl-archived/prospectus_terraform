@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.description = 'Prospectus helpers for Terraform'
   s.authors     = ['Les Aker']
   s.email       = 'me@lesaker.org'
-  s.homepage    = 'https://github.com/akerl/prospectus_travis'
+  s.homepage    = 'https://github.com/akerl/prospectus_terraform'
   s.license     = 'MIT'
 
   s.files       = `git ls-files`.split
