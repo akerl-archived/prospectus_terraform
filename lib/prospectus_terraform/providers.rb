@@ -3,11 +3,11 @@ module ProspectusTerraform
   # Lookup object to find providers
   class Lookup
     PROVIDER_REGEX = /provider\.(?<key>[\w-]+) (?<value>[\d.]+)$/
-    REPO_REGEX = /^  \/\/ provider\.(?<key>[\w-]+) (?<value>[\w-]+\/[\w-]+)/
+    REPO_REGEX = %r{^  // provider\.(?<key>[\w-]+) (?<value>[\w-]+\/[\w-]+)}
 
     def results
       @results ||= providers.map do |name, version|
-        [m.name, m.version, repos[name] || default_repo(name)]
+        [name, version, repos[name] || default_repo(name)]
       end
     end
 
@@ -50,7 +50,7 @@ module ProspectusTerraform
             expected do
               github_tag
               repo provider_repo
-              regex /^v?([\d.]+)$/
+              regex(/^v?([\d.]+)$/)
             end
 
             actual do
