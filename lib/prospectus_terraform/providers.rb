@@ -2,8 +2,8 @@ module ProspectusTerraform
   ##
   # Lookup object to find providers
   class Lookup
-    PROVIDER_REGEX = /provider\.(?<key>[\w-]+) (?<value>[\d.]+)$/
-    REPO_REGEX = %r{^  // provider\.(?<key>[\w-]+) (?<value>[\w-]+\/[\w-]+)}
+    PROVIDER_REGEX = /provider\.(?<key>[\w-]+) (?<value>[\d.]+)$/.freeze
+    REPO_REGEX = %r{^  // provider\.(?<key>[\w-]+) (?<value>[\w-]+\/[\w-]+)}.freeze # rubocop:disable Metrics/LineLength
 
     def results
       @results ||= providers.map do |name, version|
