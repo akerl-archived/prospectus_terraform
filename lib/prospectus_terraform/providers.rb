@@ -1,3 +1,5 @@
+require 'open3'
+
 module ProspectusTerraform
   ##
   # Lookup object to find providers
@@ -16,7 +18,10 @@ module ProspectusTerraform
     end
 
     def provider_lines
-      @provider_lines ||= `terraform providers`.lines
+      return @provider_lines if @provider_lines
+      stdout, stderr, status = Open3.capture3('terraform providers')
+      raise('Terraform command failed') unless status.success? && stderr.empty?
+      @provider_lines = stdout.lines
     end
 
     def repos
