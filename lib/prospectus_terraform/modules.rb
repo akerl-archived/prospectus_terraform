@@ -62,8 +62,9 @@ module ProspectusTerraform
 
     def modules
       @modules ||= JSON.parse(config_json)['module_calls'].values.map do |x|
+        next unless x['version']
         ModuleData.new(x)
-      end
+      end.compact
     end
   end
 end
