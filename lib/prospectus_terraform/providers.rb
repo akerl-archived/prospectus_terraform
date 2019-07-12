@@ -13,15 +13,21 @@ module ProspectusTerraform
       end
     end
 
-    def providers
-      @providers ||= match_to_hash(provider_lines, PROVIDER_REGEX)
+    def config_json
+      return @config_json if @config_json
+      stdout, stderr, status = Open3.capture3(cmd_name)
+      raise("#{cmd_name} failed") unless status.success? && stderr.empty?
+      @config_json = stdout
     end
 
-    def provider_lines
-      return @provider_lines if @provider_lines
-      stdout, stderr, status = Open3.capture3('terraform providers')
-      raise('Terraform command failed') unless status.success? && stderr.empty?
-      @provider_lines = stdout.lines
+    def cmd_name
+      'terraform-config-inspect --json'
+    end
+
+    def providers
+      @providers ||= JSON.parse(config_json)['required_providers'].map do |k, v|
+        [k, v.first]
+      end
     end
 
     def repos
