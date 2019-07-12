@@ -5,10 +5,11 @@ module ProspectusTerraform
   ##
   # Module object, for passing state and update info
   class ModuleData
-    attr_reader :name, :version
+    attr_reader :name, :source, :version
 
     def initialize(params)
-      @name = params['source']
+      @name = params['name']
+      @source = params['source']
       @version = params['version']
     end
 
@@ -20,7 +21,7 @@ module ProspectusTerraform
     private
 
     def latest_url
-      @latest_url ||= 'https://registry.terraform.io/v1/modules/' + name
+      @latest_url ||= 'https://registry.terraform.io/v1/modules/' + source
     end
   end
 
